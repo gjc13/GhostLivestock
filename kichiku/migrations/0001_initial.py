@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('text', models.CharField(max_length=100)),
+                ('source', models.CharField(max_length=50)),
                 ('file', models.FileField(upload_to=b'./Audio/')),
                 ('pub_date', models.DateField(verbose_name=b'date published')),
             ],
