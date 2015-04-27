@@ -110,3 +110,7 @@ STATICFILES_DIRS = (
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'kichiku/templates'),
 )
+
+MEDIA_URL = '/Audio/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "Audio")

@@ -1,9 +1,63 @@
-{# Load the tag library #}
-{% load bootstrap3 %}
+{% extends "layout.html" %}
 
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript jquery=1%}
+{% block title %}
+    GhostLivestock
+{% endblock %}
 
-{# Display django.contrib.messages as Bootstrap alerts #}
-{% bootstrap_messages %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>GhostLivestock</h1>
+
+        <p>Online GhostLivestock Generator</p>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Source</div>
+                <ul id="source" class="list-group source connected">
+                    {% for audio in latest_audio_list %}
+                        <li class="list-group-item" file="{{ audio.file }}">{{ audio.text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Target</div>
+                <ul id="target" class="list-group target connected">
+                    <li class="list-group-item"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="playSound();" type="button" class="btn btn-lg btn-success">Play</button>
+    <script type="text/javascript">
+        $(function () {
+            $('.source, .target').sortable({
+                connectWith: ".connected"
+            });
+        });
+
+        $(window).load(function () {
+            $('.list-group-item').each(function () {
+                if ($(this).attr('file')) {
+                    createjs.Sound.registerSound($(this).attr('file'), $(this).text());
+                }
+            });
+        });
+
+        var current;
+        function playSound() {
+            current = 0;
+            handleComplete();
+        }
+
+        function handleComplete(event) {
+            var myInstance = createjs.Sound.play($('ul#target .list-group-item').eq(current++).text());
+            myInstance.on("complete", handleComplete);
+        }
+    </script>
+
+{% endblock %}
