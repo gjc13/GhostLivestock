@@ -17,7 +17,7 @@
                 <div class="panel-heading">Source</div>
                 <ul id="source" class="list-group source connected">
                     {% for audio in latest_audio_list %}
-                        <li class="list-group-item" file="{{ audio.file }}">{{ audio.text }}</li>
+                        <li class="list-group-item" file="{{ audio.file }}">{{ audio.text }} - {{ audio.source}}</li>
                     {% endfor %}
                 </ul>
             </div>
